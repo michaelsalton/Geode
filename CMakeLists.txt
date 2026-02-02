@@ -17,16 +17,12 @@ option(GEODE_BUILD_VIEWER "Build interactive viewer" ON)
 # Find dependencies
 find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 
-# Assimp for OBJ/FBX loading
-find_package(assimp REQUIRED)
-
 # OpenMP (optional, for parallelization)
 find_package(OpenMP)
 
 # Main library sources
 set(GEODE_SOURCES
     src/loaders/ply_loader.cpp
-    src/loaders/mesh_loader.cpp
     src/core/primitive.cpp
     src/core/scene.cpp
     src/clustering/spatial_hash.cpp
@@ -39,7 +35,6 @@ set(GEODE_SOURCES
 
 set(GEODE_HEADERS
     include/geode/loaders/ply_loader.h
-    include/geode/loaders/mesh_loader.h
     include/geode/core/primitive.h
     include/geode/core/scene.h
     include/geode/core/types.h
@@ -65,8 +60,6 @@ target_include_directories(geode
 target_link_libraries(geode
     PUBLIC
         Eigen3::Eigen
-    PRIVATE
-        assimp::assimp
 )
 
 # Link OpenMP if available

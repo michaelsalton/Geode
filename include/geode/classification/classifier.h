@@ -15,8 +15,14 @@ struct ClusterMetrics {
     PCAMetrics pca;
     AlphaMetrics alpha;
     float normal_coherence;
+    float erank_mean;       // Mean effective rank of primitives in cluster
+    float erank_variance;   // Variance of effective rank
 
-    ClusterMetrics() : normal_coherence(0) {}
+    ClusterMetrics()
+        : normal_coherence(0)
+        , erank_mean(0)
+        , erank_variance(0)
+    {}
 };
 
 /**
@@ -33,12 +39,16 @@ struct ClassificationResult {
 
 /**
  * Configuration for classification thresholds.
+ * A cluster is MESH_OPTIMAL if ALL conditions pass.
  */
 struct ClassificationConfig {
-    float planarity_threshold = 0.7f;
-    float alpha_mean_threshold = 0.85f;
-    float alpha_variance_threshold = 0.1f;
-    float normal_coherence_threshold = 0.7f;
+    float planarity_threshold = 0.7f;           // > for mesh
+    float erank_mean_low = 1.8f;                // > for mesh (disk-like)
+    float erank_mean_high = 2.2f;               // < for mesh (not too spherical)
+    float alpha_mean_threshold = 0.85f;         // > for mesh (opaque)
+    float alpha_variance_threshold = 0.1f;      // < for mesh (consistent opacity)
+    float normal_coherence_threshold = 0.7f;    // > for mesh (aligned normals)
+    float uncertainty_margin = 0.1f;            // Mark as UNCERTAIN if within this margin
 };
 
 /**

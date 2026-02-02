@@ -6,24 +6,31 @@
 namespace geode {
 
 /**
- * Unified primitive representation that works for both
- * Gaussian splats and mesh vertices.
+ * Primitive representation for 3D Gaussian Splats.
+ * Contains derived geometric properties computed during ingestion.
  */
 struct Primitive {
-    vec3 position;
-    mat3 covariance;
-    float alpha;
-    vec3 normal;
-    std::array<float, 48> sh_coefficients; // Optional, for color
-    PrimitiveType type;
+    // Core Gaussian properties
+    vec3 position;                          // Spatial location
+    mat3 covariance;                        // 3x3 covariance matrix (reconstructed from scale + rotation)
+    float alpha;                            // Opacity value [0, 1]
+
+    // Derived from eigendecomposition of covariance
+    vec3 eigenvalues;                       // λ₁ >= λ₂ >= λ₃ (sorted descending)
+    vec3 normal;                            // Smallest eigenvector (surface normal)
+    float effective_rank;                   // exp(H(q₁, q₂, q₃)) - shape complexity [1, 3]
+
+    // Color (Spherical Harmonics)
+    std::array<float, 48> sh_coefficients;  // DC (3) + higher-order (45)
 
     Primitive()
         : position(vec3::Zero())
         , covariance(mat3::Identity())
         , alpha(1.0f)
+        , eigenvalues(vec3::Ones())
         , normal(vec3::UnitZ())
+        , effective_rank(3.0f)
         , sh_coefficients{}
-        , type(PrimitiveType::MESH_VERTEX)
     {}
 };
 

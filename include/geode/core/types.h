@@ -9,13 +9,9 @@ namespace geode {
 
 // Type aliases for convenience
 using vec3 = Eigen::Vector3f;
+using vec4 = Eigen::Vector4f;
 using mat3 = Eigen::Matrix3f;
-
-// Primitive type enumeration
-enum class PrimitiveType {
-    GAUSSIAN,
-    MESH_VERTEX
-};
+using quat = Eigen::Quaternionf;
 
 // Cluster label enumeration
 enum class ClusterLabel {

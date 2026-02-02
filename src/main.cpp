@@ -6,8 +6,8 @@ int main(int argc, char** argv) {
     std::cout << "Version 0.1.0" << std::endl;
 
     if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
-        std::cerr << "Supported formats: .ply, .obj, .fbx" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <input.ply>" << std::endl;
+        std::cerr << "Supported formats: 3DGS .ply files" << std::endl;
         return 1;
     }
 
