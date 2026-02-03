@@ -1,4 +1,4 @@
-# GEODE
+# Geode
 
 **Heterogeneous Labeling Heuristic for 3D Gaussian Splatting Assets**
 
